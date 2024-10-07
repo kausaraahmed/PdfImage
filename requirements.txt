@@ -1,3 +1,2 @@
 Flask
-pdf2image
-Pillow
+PyMuPDF

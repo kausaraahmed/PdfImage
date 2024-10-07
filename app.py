@@ -1,5 +1,5 @@
 from flask import Flask, request, send_file, render_template
-from pdf2image import convert_from_bytes
+import pymupdf
 import io
 import zipfile
 
@@ -13,8 +13,15 @@ def upload_form():
 
 @app.route("/upload", methods=["POST"])
 def convert_pdf():
-    pdf_file = request.files["pdf"]
-    images = convert_from_bytes(pdf_file.read())
+    pdf_file = request.files["file"]
+    pdf_data = pdf_file.read()
+    doc = pymupdf.open("pdf", pdf_data)
+    images = []
+    for page in doc:
+        pix = page.get_pixmap()
+        img_data = pix.tobytes("png")
+        images.append(img_data)
+
     filename = pdf_file.filename.split(".")[0]
 
     if len(images) > 1:
@@ -25,10 +32,7 @@ def convert_pdf():
             zip_io, mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
         ) as zip_archive:
             for i, image in enumerate(images):
-                img_io = io.BytesIO()
-                image.save(img_io, "JPEG")
-                img_io.seek(0)
-                zip_archive.writestr(f"{filename}_{i+1}.jpg", img_io.getvalue())
+                zip_archive.writestr(f"{filename}_{i+1}.png", image)
 
         zip_io.seek(0)
 
@@ -40,14 +44,14 @@ def convert_pdf():
         )
 
     else:
-        img_io = io.BytesIO()
-        images[0].save(img_io, "JPEG")
-        img_io.seek(0)
+        img_io = io.BytesIO(images[0])  # Create a BytesIO object with the image bytes
+        img_io.seek(0)  # Move the pointer to the start of the BytesIO object
+
         return send_file(
             img_io,
-            mimetype="image/jpeg",
+            mimetype="image/png",  # Change this to PNG since you're converting to PNG earlier
             as_attachment=True,
-            download_name=f"{filename}.jpg",
+            download_name=f"{filename}.png",  # Change this to .png as well
         )
 
 
