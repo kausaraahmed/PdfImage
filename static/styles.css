@@ -29,20 +29,18 @@ h1 {
     display: flex;
     background-color: tan;
     padding: 3vw;
-    border: 1.5px solid #14141450;
+    border: 2px solid #14141430;
     border-radius: 10px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
     transition: 0.2s ease-in-out;
 }
 
 .form-area:hover {
-    border: 1.5px solid #141414;
-    scale: 1.005;
+    border: 2px solid #141414;
 }
 
 button {
     padding: 10px 20px;
-    /* border-radius: 5px; */
     border-radius: 5px 15px 0 15px;
     background-color: cadetblue;
     font-weight: 700;
