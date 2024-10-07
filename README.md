@@ -15,19 +15,6 @@ This project is a Flask web application that enables users to upload PDF files a
 - [Contributing](#contributing)
 - [License](#license)
 
-## Contributing
-
-Contributions are welcome! Here’s how you can contribute to this project:
-
-1. **Fork the Repository**:
-   - Click the "Fork" button at the top-right corner of the repository page on GitHub to create your copy of the repository.
-
-2. **Clone the Forked Repository**:
-   ```bash
-   git clone https://github.com/yourusername/repo-name.git
-   cd repo-name
-
-
 ## Features
 
 - **Upload PDF Files**: Users can upload PDF files through a simple web interface.
