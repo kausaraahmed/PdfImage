@@ -6,7 +6,6 @@ This project is a Flask web application that enables users to upload PDF files a
 
 ## Table of Contents
 
-- [PDF to Image Converter](#pdf-to-image-converter)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
