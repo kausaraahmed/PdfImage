@@ -13,8 +13,9 @@ def upload_form():
 
 @app.route("/upload", methods=["POST"])
 def convert_pdf():
-    pdf_file = request.files["file"]
+    pdf_file = request.files['file']
     pdf_data = pdf_file.read()
+        
     doc = pymupdf.open("pdf", pdf_data)
     images = []
     for page in doc:
@@ -27,7 +28,6 @@ def convert_pdf():
     if len(images) > 1:
         zip_io = io.BytesIO()
 
-        # Create the zip file in memory
         with zipfile.ZipFile(
             zip_io, mode="w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
         ) as zip_archive:
@@ -44,16 +44,15 @@ def convert_pdf():
         )
 
     else:
-        img_io = io.BytesIO(images[0])  # Create a BytesIO object with the image bytes
-        img_io.seek(0)  # Move the pointer to the start of the BytesIO object
+        img_io = io.BytesIO(images[0]) 
+        img_io.seek(0) 
 
         return send_file(
             img_io,
-            mimetype="image/png",  # Change this to PNG since you're converting to PNG earlier
+            mimetype="image/png", 
             as_attachment=True,
-            download_name=f"{filename}.png",  # Change this to .png as well
+            download_name=f"{filename}.png",
         )
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
